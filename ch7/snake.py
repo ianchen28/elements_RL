@@ -12,7 +12,7 @@ class SnakeEnv(gym.Env):
         self.observation_space=Discrete(self.SIZE+1)
         self.action_space=Discrete(len(dices))
 
-        for k,v in self.ladders.items():
+        for k,v in list(self.ladders.items()):
             self.ladders[v] = k
             # print 'ladders info:'
             # print self.ladders
@@ -36,13 +36,14 @@ class SnakeEnv(gym.Env):
             self.pos = self.ladders[self.pos]
         return self.pos, -1, 0, {}
 
-    def reward(self, s):
+    @staticmethod
+    def reward(s):
         if s == 100:
             return 100
         else:
             return -1
 
-    def render(self):
+    def render(self, **kwargs):
         pass
 
 class TableAgent(object):
@@ -67,7 +68,7 @@ class TableAgent(object):
                 for dst in step:
                     self.p[i, src, dst] += prob
         self.p[:, 100, 100]=1
-        self.value_pi = np.zeros((self.s_len))
+        self.value_pi = np.zeros(self.s_len)
         self.value_q = np.zeros((self.s_len, self.a_len))
         self.gamma = 0.8
 
@@ -107,12 +108,13 @@ def eval_game(env, policy):
           break
     return return_val
 
+
 if __name__ == '__main__':
     env = SnakeEnv(10, [3,6])
     env.reset()
     while True:
         state, reward, terminate, _ = env.step(0)
-        print reward, state
+        print(reward, state)
         if terminate == 1:
             break
 

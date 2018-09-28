@@ -35,7 +35,7 @@ class PolicyIteration(object):
             for i in range(1, agent.s_len):  # for each state
                 ac = agent.pi[i]
                 # for j in range(0, agent.act_num): # for each act
-                # print(ac
+                # print(ac)
                 transition = agent.p[ac, i, :]
                 value_sa = np.dot(transition, agent.r + agent.gamma * agent.value_pi)
                 # value_sas.append(value_sa)
