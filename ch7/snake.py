@@ -100,7 +100,7 @@ def eval_game(env, policy):
         elif isinstance(policy, list):
             act = policy[state]
         else:
-            raise Error('Illegal policy')
+            raise RuntimeError('Illegal policy')
         state, reward, terminate, _ = env.step(act)
         # print state
         return_val += reward
